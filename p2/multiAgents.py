@@ -72,9 +72,45 @@ class ReflexAgent(Agent):
         newFood = successorGameState.getFood()
         newGhostStates = successorGameState.getGhostStates()
         newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
+        
 
-        "*** YOUR CODE HERE ***"
-        return successorGameState.getScore()
+        # Get a list of food positions and distances
+        foodPositions = newFood.asList()
+        foodDistances = [manhattanDistance(food, newPos) for food in foodPositions]
+
+        # Get the ghost positions and their distances to Pacman
+        ghostPositions = successorGameState.getGhostPositions()
+        ghostDistances = [manhattanDistance(ghost, newPos) for ghost in ghostPositions]
+
+        # Check if Pacman won (ate all the food)
+        if len(foodDistances) == 0:
+            return float("inf")
+
+        # Check if Pacman lost (caught by a ghost)
+        if min(ghostDistances) < 2:
+            return -(float("inf"))
+
+        if currentGameState.getPacmanPosition()==newPos:
+            return(-(float("inf")))
+            
+        score = 0
+
+        if currentGameState.getCapsules():
+            score += 5/(manhattanDistance(currentGameState.getCapsules()[0],newPos)+1)
+
+        
+        score += 10/min(foodDistances) + 10000/(len(foodDistances))
+
+
+        # Encourage Pacman to eat scared ghosts
+        for ghostDistance, scaredTime in zip(ghostDistances, newScaredTimes):
+            if scaredTime > 0:
+                score += 5000 / (ghostDistance + 1)
+
+        return score
+
+
+
 
 def scoreEvaluationFunction(currentGameState):
     """
