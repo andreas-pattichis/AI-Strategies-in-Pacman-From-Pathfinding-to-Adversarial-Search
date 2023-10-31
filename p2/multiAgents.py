@@ -42,14 +42,12 @@ class ReflexAgent(Agent):
         legalMoves = gameState.getLegalActions()
 
         # Choose one of the best actions
-        scores = [self.evaluationFunction(gameState, action) for action in legalMoves]
-        bestScore = max(scores)
-        bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]
+        scores = [self.evaluationFunction(gameState, action) for action in legalMoves]  # Get the score of each action
+        bestScore = max(scores)  # Get the highest score
+        bestIndices = [index for index in range(len(scores)) if scores[index] == bestScore]  # Get the indices of the best actions
         chosenIndex = random.choice(bestIndices)  # Pick randomly among the best
 
-        "Add more of your code here if you want to"
-
-        return legalMoves[chosenIndex]
+        return legalMoves[chosenIndex]  # Return the best action
 
     def evaluationFunction(self, currentGameState, action):
         """
@@ -167,23 +165,33 @@ class MinimaxAgent(MultiAgentSearchAgent):
         gameState.isLose():
         Returns whether or not the game state is a losing state
         """
-        "*** YOUR CODE HERE ***"
 
         def minimax(agentIndex, depth, gameState):
+            """
+            Method that implements the minimax algorithm
+            """
+            # Check if the game is over or if the depth is reached
             if gameState.isWin() or gameState.isLose() or depth == self.depth:
-                return self.evaluationFunction(gameState), None
+                return self.evaluationFunction(gameState), None  # Return the score of the state and None as action
+            # Get the legal actions for the current agent
             actions = gameState.getLegalActions(agentIndex)
+
             if agentIndex == 0:  # Pacman's turn (Max)
+                # Get the values of the next states and the corresponding actions
                 values = [minimax(1, depth, gameState.generateSuccessor(agentIndex, action))[0] for action in actions]
+                # Return the maximum value and the corresponding action
                 return max(values), actions[values.index(max(values))]
             else:  # Ghosts' turn (Min)
+                # If the last ghost has played, increase the depth by 1 otherwise keep the same depth
                 nextAgent = agentIndex + 1 if agentIndex + 1 < gameState.getNumAgents() else 0
                 nextDepth = depth + 1 if nextAgent == 0 else depth
+                # Get the values of the next states and the corresponding actions
                 values = [minimax(nextAgent, nextDepth, gameState.generateSuccessor(agentIndex, action))[0] for action
                           in actions]
+                # Return the minimum value and the corresponding action
                 return min(values), actions[values.index(min(values))]
 
-        return minimax(0, 0, gameState)[1]
+        return minimax(0, 0, gameState)[1]  # Return the action of the root node
 
         # util.raiseNotDefined()
 
@@ -195,37 +203,56 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
 
     def getAction(self, gameState):
         def alphabeta(agentIndex, depth, gameState, alpha, beta):
+            """
+            Method that implements the minimax algorithm with alpha-beta pruning
+            """
+            # Check if the game is over or if the depth is reached
             if gameState.isWin() or gameState.isLose() or depth == self.depth:
-                return self.evaluationFunction(gameState), None
+                return self.evaluationFunction(gameState), None  # Return the score of the state and None as action
+            # Get the legal actions for the current agent
             actions = gameState.getLegalActions(agentIndex)
+
             if agentIndex == 0:  # Pacman's turn (Max)
-                value = float('-inf')
-                action_to_take = None
+                value = float('-inf')  # Initialize the value to -infinity
+                action_to_take = None  # Initialize the action to None
+                # For each action of the current agent
                 for action in actions:
+                    # Get the value of the next state
                     new_value, _ = alphabeta(1, depth, gameState.generateSuccessor(agentIndex, action), alpha, beta)
+                    # If the value is greater than the current value, update the value and the action
                     if new_value > value:
                         value = new_value
                         action_to_take = action
+                    # If the value is greater than beta, return the value and the action (pruning)
                     if value > beta:
                         return value, action_to_take
+                    # Update alpha
                     alpha = max(alpha, value)
+                # Return the value and the action
                 return value, action_to_take
             else:  # Ghosts' turn (Min)
-                value = float('inf')
-                action_to_take = None
+                value = float('inf')  # Initialize the value to infinity
+                action_to_take = None  # Initialize the action to None
+                # If the last ghost has played, increase the depth by 1 otherwise keep the same depth
                 nextAgent = agentIndex + 1 if agentIndex + 1 < gameState.getNumAgents() else 0
                 nextDepth = depth + 1 if nextAgent == 0 else depth
+                # For each action of the current agent
                 for action in actions:
+                    # Get the value of the next state
                     new_value, _ = alphabeta(nextAgent, nextDepth, gameState.generateSuccessor(agentIndex, action), alpha, beta)
+                    # If the value is smaller than the current value, update the value and the action
                     if new_value < value:
                         value = new_value
                         action_to_take = action
+                    # If the value is smaller than alpha, return the value and the action (pruning)
                     if value < alpha:
                         return value, action_to_take
+                    # Update beta
                     beta = min(beta, value)
+                # Return the value and the action
                 return value, action_to_take
 
-        return alphabeta(0, 0, gameState, float('-inf'), float('inf'))[1]
+        return alphabeta(0, 0, gameState, float('-inf'), float('inf'))[1] # Return the action of the root node
 
 
 

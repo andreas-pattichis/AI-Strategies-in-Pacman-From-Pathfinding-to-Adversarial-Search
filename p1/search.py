@@ -86,91 +86,69 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
-  
-    # stack = util.Stack()
-    # visited = set()
-    # parent_map = {}  # To store parent information
-
-    # # Initialize the stack with the starting node and an empty path
-    # start_node = (problem.getStartState(), None)
-    # stack.push(start_node)
-
-    # while not stack.isEmpty():
-    #     location, parent = stack.pop()
-
-    #     if location in visited:
-    #         continue
-
-    #     visited.add(location)
-
-    #     if problem.isGoalState(location):
-    #         path = []
-    #         while parent is not None:
-    #             location, action = parent
-    #             path.insert(0, action)
-    #             parent = parent_map.get(location)
-    #         return path
-
-    #     successors = problem.getSuccessors(location)
-
-    #     for successor in successors:
-    #         successor_location, action, cost = successor
-
-    #         if successor_location not in visited:
-    #             stack.push((successor_location, (location, action)))
-    #             parent_map[successor_location] = (location, action)  # Store parent information
-
-    # return [] #returns a list of actions
-
+    # Initialize the stack to manage the nodes to be visited
     stack = util.Stack()
+    # Set to store the visited nodes and avoid revisiting them
     visited = set()
+    # Starting node with empty action path
     start_node = (problem.getStartState(), [])
 
-    stack.push(start_node)
+    stack.push(start_node)  # Push the starting node to the stack
 
+    # While there are nodes to be visited
     while not stack.isEmpty():
+        # Pop the node from the stack
         location, path = stack.pop()
 
+        # If the node has not been visited
         if location not in visited:
-            visited.add(location)
+            visited.add(location)  # Mark the node as visited
 
+            # If the node is the goal state, return the path
             if problem.isGoalState(location):
-                return path
+                return path  # Return the path
 
-            successors = problem.getSuccessors(location)
+            successors = problem.getSuccessors(location)  # Get the successors of the node
 
+            # Iterate over the successors and push them to the stack if they have not been visited
             for successor in successors:
                 successor_location, action, cost = successor
 
                 if successor_location not in visited:
                     stack.push((successor_location, path + [action]))
 
-    return []
+    return []  # Return an empty list if no path was found
 
 def heuristic(node1, node2):
     return util.manhattanDistance(node1,node2)
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+    # Initialize the queue to manage the nodes to be visited
     queue = util.Queue()
+    # Set to store the visited nodes and avoid revisiting them
     visited = set()
+    # Starting node with empty action path
     start_node = (problem.getStartState(), [])
 
-    queue.push(start_node)
+    queue.push(start_node)  # Push the starting node to the queue
 
+    # While there are nodes to be visited
     while not queue.isEmpty():
+        # Pop the node from the queue
         location, path = queue.pop()
 
+        # If the node has not been visited
         if location not in visited:
-            visited.add(location)
+            visited.add(location)  # Mark the node as visited
 
+            # If the node is the goal state, return the path
             if problem.isGoalState(location):
-                return path
+                return path  # Return the path
 
-            successors = problem.getSuccessors(location)
+            successors = problem.getSuccessors(location)  # Get the successors of the node
 
+            # Iterate over the successors and push them to the queue if they have not been visited
             for successor in successors:
                 successor_location, action, cost = successor
 
@@ -181,34 +159,44 @@ def breadthFirstSearch(problem):
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
+    # Initialize the priority queue to manage the nodes to be visited
     priority_queue = util.PriorityQueue()
+    # Set to store the visited nodes and avoid revisiting them
     visited = set()
-    
+    # Start state of the problem
     start_state = problem.getStartState()
+    # Starting node with empty action path and zero cost
     start_node = (start_state, [], 0)  # Node format: (state, path, cost)
 
-    priority_queue.push(start_node, 0)
+    priority_queue.push(start_node, 0)  # Push the starting node to the priority queue
 
+    # While there are nodes to be visited
     while not priority_queue.isEmpty():
+        # Pop the node from the priority queue
         current_state, path, current_cost = priority_queue.pop()
 
+        # If the node has not been visited then continue
         if current_state in visited:
             continue
-        visited.add(current_state)
 
+        visited.add(current_state)  # Mark the node as visited
+
+        # If the node is the goal state, return the path
         if problem.isGoalState(current_state):
             return path
 
+        # Get the successors of the node and iterate over them
         for successor_state, action, step_cost in problem.getSuccessors(current_state):
+            # If the successor has not been visited
             if successor_state not in visited:
+                # Create a new node with the successor state, the path to the successor and the cost to get there
                 new_path = path + [action]
                 new_cost = current_cost + step_cost
                 new_node = (successor_state, new_path, new_cost)
+                # Push the new node to the priority queue
                 priority_queue.push(new_node, new_cost)
 
-    return []
-
+    return []  # Return an empty list if no path was found
 
 
 def nullHeuristic(state, problem=None):
@@ -220,34 +208,45 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
+    # Initialize the priority queue to manage the nodes to be visited
     priority_queue = util.PriorityQueue()
+    # Set to store the visited nodes and avoid revisiting them
     visited = set()
-
+    # Start state of the problem
     start_state = problem.getStartState()
+    # Starting node with empty action path and zero cost
     start_node = (start_state, [], 0)  # Node format: (state, path, cost)
 
-    priority_queue.push(start_node, 0)
+    priority_queue.push(start_node, 0)  # Push the starting node to the priority queue
 
+    # While there are nodes to be visited
     while not priority_queue.isEmpty():
+        # Pop the node from the priority queue
         current_state, path, current_cost = priority_queue.pop()
 
+        # If the node has not been visited then continue
         if current_state in visited:
             continue
-        visited.add(current_state)
 
+        visited.add(current_state)  # Mark the node as visited
+
+        # If the node is the goal state, return the path
         if problem.isGoalState(current_state):
             return path
 
+        # Get the successors of the node and iterate over them
         for successor_state, action, step_cost in problem.getSuccessors(current_state):
+            # If the successor has not been visited
             if successor_state not in visited:
+                # Create a new node with the successor state, the path to the successor and the cost to get there
                 new_path = path + [action]
                 new_cost = current_cost + step_cost
                 total_cost = new_cost + heuristic(successor_state, problem)  # Combined cost and heuristic
                 new_node = (successor_state, new_path, new_cost)
+                # Push the new node to the priority queue
                 priority_queue.push(new_node, total_cost)
 
-    return []
+    return []  # Return an empty list if no path was found
 
 
 # Abbreviations
