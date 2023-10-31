@@ -105,7 +105,7 @@ class ReflexAgent(Agent):
         # Encourage Pacman to eat scared ghosts
         for ghostDistance, scaredTime in zip(ghostDistances, newScaredTimes):
             if scaredTime > 0:
-                score += 5000 / (ghostDistance + 1)
+                score += 50000 / (ghostDistance + 1)
 
         return score
 
