@@ -194,11 +194,39 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
     """
 
     def getAction(self, gameState):
-        """
-        Returns the minimax action using self.depth and self.evaluationFunction
-        """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        def alphabeta(agentIndex, depth, gameState, alpha, beta):
+            if gameState.isWin() or gameState.isLose() or depth == self.depth:
+                return self.evaluationFunction(gameState), None
+            actions = gameState.getLegalActions(agentIndex)
+            if agentIndex == 0:  # Pacman's turn (Max)
+                value = float('-inf')
+                action_to_take = None
+                for action in actions:
+                    new_value, _ = alphabeta(1, depth, gameState.generateSuccessor(agentIndex, action), alpha, beta)
+                    if new_value > value:
+                        value = new_value
+                        action_to_take = action
+                    if value > beta:
+                        return value, action_to_take
+                    alpha = max(alpha, value)
+                return value, action_to_take
+            else:  # Ghosts' turn (Min)
+                value = float('inf')
+                action_to_take = None
+                nextAgent = agentIndex + 1 if agentIndex + 1 < gameState.getNumAgents() else 0
+                nextDepth = depth + 1 if nextAgent == 0 else depth
+                for action in actions:
+                    new_value, _ = alphabeta(nextAgent, nextDepth, gameState.generateSuccessor(agentIndex, action), alpha, beta)
+                    if new_value < value:
+                        value = new_value
+                        action_to_take = action
+                    if value < alpha:
+                        return value, action_to_take
+                    beta = min(beta, value)
+                return value, action_to_take
+
+        return alphabeta(0, 0, gameState, float('-inf'), float('inf'))[1]
+
 
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
