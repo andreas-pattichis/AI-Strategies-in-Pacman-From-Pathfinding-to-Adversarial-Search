@@ -7,12 +7,10 @@ This repository contains my solutions to the Pacman projects, as outlined in the
 
 Implemented various search algorithms to navigate Pacman through mazes to reach goals. In particular it focuses on search algorithms, where we have tackled four specific problems:
 - **Question 1:** Implemented Depth-First Search (DFS) to find a path to a particular point on the Pacman board. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project1/#question-1-3-points-finding-a-fixed-food-dot-using-depth-first-search)
-
 - **Question 2:** Utilized Breadth-First Search (BFS) for a more efficient pathfinding solution. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project1/#question-2-3-points-breadth-first-search)
-
 - **Question 3:** Adjusted the cost function to accommodate varying costs of actions. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project1/#question-3-3-points-varying-the-cost-function)
-
 - **Question 4:** Implemented A* search algorithm to find an optimal path with the least cost. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project1/#question-4-3-points-a-search)
+
 
 ## Project 2: Multi-Agent Pacman
 
