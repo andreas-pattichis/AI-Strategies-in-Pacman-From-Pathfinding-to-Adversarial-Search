@@ -19,9 +19,7 @@ The second project introduces the concept of adversarial search, focusing on gam
 ![Multi-Agent Pacman](https://inst.eecs.berkeley.edu/~cs188/sp20/assets/images/pacman_multi_agent.png)
 
 - **Question 1:** Developed a Reflex Agent that reacts to game states for immediate decisions. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project2/#question-1-4-points-reflex-agent)
-
 - **Question 2:** Implemented the Minimax algorithm to simulate adversarial play between Pacman and ghosts. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project2/#question-2-5-points-minimax)
-
 - **Question 3:** Enhanced the Minimax algorithm with Alpha-Beta Pruning for optimizing the decision-making process. [Details](https://inst.eecs.berkeley.edu/~cs188/su21/project2/#question-3-5-points-alpha-beta-pruning)
 
 ## What We Learned
