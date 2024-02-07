@@ -4,6 +4,7 @@ This repository contains my solutions to the Pacman projects, as outlined in the
 
 ## Project 1: Search in Pacman
 ![Maze Example](https://inst.eecs.berkeley.edu/~cs188/sp20/assets/images/maze.png)
+
 Implemented various search algorithms to navigate Pacman through mazes to reach goals. In particular it focuses on search algorithms, where we have tackled four specific problems:
 - **Question 1:** Implemented Depth-First Search (DFS) to find a path to a particular point on the Pacman board. ![Details](https://inst.eecs.berkeley.edu/~cs188/su21/project1/#question-1-3-points-finding-a-fixed-food-dot-using-depth-first-search)
 
@@ -18,6 +19,7 @@ Implemented various search algorithms to navigate Pacman through mazes to reach 
 The second project introduces the concept of adversarial search, focusing on game theory and strategic decision-making:
 
 ![Multi-Agent Pacman](https://inst.eecs.berkeley.edu/~cs188/sp20/assets/images/pacman_multi_agent.png)
+
 - **Question 1:** Developed a Reflex Agent that reacts to game states for immediate decisions. ![Details](https://inst.eecs.berkeley.edu/~cs188/su21/project2/#question-1-4-points-reflex-agent)
 
 - **Question 2:** Implemented the Minimax algorithm to simulate adversarial play between Pacman and ghosts. ![Details](https://inst.eecs.berkeley.edu/~cs188/su21/project2/#question-2-5-points-minimax)
