@@ -1,4 +1,4 @@
-# Pacman Search Lab
+# AI Strategies in Pacman: From Pathfinding to Adversarial Search
 
 This repository contains my solutions to the Pacman projects, as outlined in the Berkeley CS188 Introduction to Artificial Intelligence course for the 2021 Summer session. Through these projects, I have implemented various search algorithms and game-playing agents, demonstrating a deep understanding of AI principles.
 
